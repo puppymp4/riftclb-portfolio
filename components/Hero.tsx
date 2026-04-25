@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -16,22 +15,33 @@ const fadeUp: Variants = {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* tape strip */}
-      <div className="tape left-[8%] top-3 hidden md:block" style={{ transform: "rotate(-3deg)" }} />
-      <div className="tape right-[12%] top-6 hidden md:block" style={{ transform: "rotate(2deg)" }} />
+    <section className="relative overflow-hidden bg-[var(--color-ink)]">
+      {/* full-width hero video plate behind everything */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/posters/hero.jpg"
+          className="h-full w-full object-cover opacity-65"
+          aria-hidden
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-ink)]/60 via-[var(--color-ink)]/30 to-[var(--color-ink)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/60 via-transparent to-[var(--color-ink)]/40" />
+      </div>
 
-      <div className="mx-auto max-w-[1440px] px-6 pt-12 pb-24 md:px-12 md:pt-20 md:pb-40">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-6 pt-16 pb-32 md:px-12 md:pt-24 md:pb-48">
         {/* magazine masthead row */}
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-14">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4 md:mb-16">
           <div className="flex items-center gap-4">
-            <span className="eyebrow text-[var(--color-ink-mute)]">Issue 001</span>
-            <span className="h-px w-10 bg-[var(--color-ink)]/40" />
-            <span className="eyebrow text-[var(--color-ink-mute)]">2026</span>
+            <span className="eyebrow-bright">Issue 001</span>
+            <span className="h-px w-10 bg-[var(--color-paper)]/40" />
+            <span className="eyebrow-bright">2026</span>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="eyebrow text-[var(--color-ink-mute)]">Films · Stills · Culture</span>
-          </div>
+          <span className="eyebrow-bright">Films · Stills · Culture</span>
         </div>
 
         {/* cutout headline */}
@@ -39,7 +49,7 @@ export function Hero() {
           <motion.h1
             initial="hidden"
             animate="show"
-            className="cut-headline text-[clamp(82px,15vw,260px)]"
+            className="cut-headline text-[clamp(82px,15vw,260px)] text-[var(--color-paper)]"
             aria-label="rift.clb"
           >
             <motion.span variants={fadeUp} custom={0} className="block">
@@ -56,14 +66,14 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.6, rotate: -20 }}
             animate={{ opacity: 1, scale: 1, rotate: -8 }}
             transition={{ delay: 0.5, duration: 0.6, ease: EASE }}
-            className="absolute right-[2%] top-[22%] hidden h-28 w-28 items-center justify-center rounded-full border-2 border-[var(--color-stamp-red)] text-center md:flex"
+            className="absolute right-[2%] top-[18%] hidden h-28 w-28 items-center justify-center rounded-full border-2 border-[var(--color-stamp-red)] bg-[var(--color-ink)]/70 backdrop-blur-sm text-center md:flex"
             aria-hidden
           >
             <div className="px-2">
               <div className="font-[var(--font-mono)] text-[10px] uppercase tracking-[0.3em] text-[var(--color-stamp-red)]">
                 Approved
               </div>
-              <div className="cut-headline-roman text-[14px] mt-1 text-[var(--color-stamp-red)]">
+              <div className="cut-headline-roman text-[14px] mt-1 text-[var(--color-paper)]">
                 CINEMA
               </div>
               <div className="font-[var(--font-mono)] text-[10px] uppercase tracking-[0.3em] text-[var(--color-stamp-red)] mt-1">
@@ -81,38 +91,14 @@ export function Hero() {
           custom={3}
           className="mt-10 grid gap-8 md:mt-16 md:grid-cols-12"
         >
-          <p className="md:col-span-6 md:col-start-1 max-w-[55ch] text-[19px] leading-[1.5] md:text-[22px]">
+          <p className="md:col-span-6 md:col-start-1 max-w-[55ch] text-[19px] leading-[1.5] md:text-[22px] text-[var(--color-paper)]">
             Automotive films, stills, and brand content shot the way the culture deserves.
-            Rollers under tunnel lights. Garage edits at 2am. <span className="editorial">No stock footage. No filler.</span>
+            Rollers under tunnel lights. Garage edits at 2am.{" "}
+            <span className="editorial">No stock footage. No filler.</span>
           </p>
           <div className="md:col-span-4 md:col-start-9 flex flex-wrap items-end gap-3">
             <a href="#work" className="btn-stamp">See the work →</a>
             <a href="#contact" className="btn-ghost">Book a shoot</a>
-          </div>
-        </motion.div>
-
-        {/* hero photo plate */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.9, ease: EASE }}
-          className="relative mt-16 md:mt-24"
-        >
-          <div className="tape -top-3 left-[14%] hidden md:block" style={{ transform: "rotate(-4deg)" }} />
-          <div className="tape -top-3 right-[16%] hidden md:block" style={{ transform: "rotate(3deg)" }} />
-          <div className="relative aspect-[16/9] w-full overflow-hidden border border-[var(--color-ink)]/30 shadow-[0_30px_60px_-20px_rgba(13,12,10,0.35)]">
-            <Image
-              src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85"
-              alt="911 GT3 in low garage lighting, lead frame from rift.clb reel"
-              fill
-              priority
-              sizes="(min-width: 768px) 90vw, 100vw"
-              className="halftone object-cover"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/40 via-transparent to-[var(--color-ink)]/10" />
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 text-[var(--color-paper)] md:bottom-6 md:left-6">
-              <span className="eyebrow">Reel 26 / Frame 008</span>
-            </div>
           </div>
         </motion.div>
       </div>

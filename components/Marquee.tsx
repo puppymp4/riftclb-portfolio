@@ -13,7 +13,7 @@ export function Marquee() {
 
   return (
     <div
-      className="border-y border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] overflow-hidden"
+      className="border-y border-[var(--color-ink-line)] bg-[var(--color-paper)] text-[var(--color-ink)] overflow-hidden"
       role="presentation"
     >
       <div className="marquee-track flex whitespace-nowrap py-5">
