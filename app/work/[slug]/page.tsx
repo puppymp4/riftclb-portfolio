@@ -100,20 +100,29 @@ export default async function ProjectPage({
         {/* HERO MEDIA · video player or cover image */}
         <section className="relative">
           <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-            <div className="relative aspect-video w-full overflow-hidden border border-[var(--color-ink-line)] bg-[var(--color-ink-elevated)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-              {project.videoUrl ? (
-                <video
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster={project.cover.url}
-                  className="absolute inset-0 h-full w-full object-cover"
+            {project.videoUrl ? (
+              <div className="mx-auto flex justify-center">
+                <div
+                  className={`relative w-full overflow-hidden border border-[var(--color-ink-line)] bg-[var(--color-ink-elevated)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ${
+                    project.orientation === "vertical" ? "max-w-[460px]" : "max-w-[1280px]"
+                  }`}
+                  style={{
+                    aspectRatio: project.orientation === "vertical" ? "9 / 16" : "16 / 9",
+                  }}
                 >
-                  <source src={project.videoUrl} type="video/mp4" />
-                </video>
-              ) : (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={project.cover.url}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  >
+                    <source src={project.videoUrl} type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            ) : (
+              <div className="relative aspect-video w-full overflow-hidden border border-[var(--color-ink-line)] bg-[var(--color-ink-elevated)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
                 <Image
                   src={project.cover.url}
                   alt={project.cover.alt}
@@ -122,8 +131,8 @@ export default async function ProjectPage({
                   sizes="(min-width: 768px) 90vw, 100vw"
                   className="object-cover"
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </section>
 

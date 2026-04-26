@@ -6,6 +6,8 @@ export type ProjectCategory =
   | "Events"
   | "Brand";
 
+export type Orientation = "vertical" | "horizontal";
+
 export type Project = {
   _id: string;
   slug: string;
@@ -15,6 +17,7 @@ export type Project = {
   category: ProjectCategory;
   cover: { url: string; alt: string };
   videoUrl?: string;
+  orientation?: Orientation; // native aspect of the source clip
   description: string;
   tags: string[];
   featured?: boolean;
@@ -30,6 +33,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/amg-gt-cinematic.jpg", alt: "Mercedes AMG GT in tunnel light" },
     videoUrl: "/videos/amg-gt-cinematic.mp4",
+    orientation: "vertical",
     description:
       "Headliner cut. Tunnel rollers, garage edit, color grade pulled to a single pump of warm key. The reel I open every pitch with.",
     tags: ["Cinema", "Rollers", "AMG", "Headliner"],
@@ -43,6 +47,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/lambo-sto-christmas.jpg", alt: "Lamborghini STO Christmas film" },
     videoUrl: "/videos/lambo-sto-christmas.mp4",
+    orientation: "vertical",
     description:
       "Holiday brand cut. Speedramps, ambient garage light, and a 600hp Italian on a chrome night. Shot in one evening before close.",
     tags: ["Cinema", "Speedramp", "Lamborghini"],
@@ -56,6 +61,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/bmw-g30-wrap-reveal.jpg", alt: "BMW G30 wrap reveal" },
     videoUrl: "/videos/bmw-g30-wrap-reveal.mp4",
+    orientation: "horizontal",
     description:
       "Reveal film for a satin metallic G30 wrap. Booth lighting, slow drift around the car, peel-shot intercut. Pulled three follow-up bookings the week it dropped.",
     tags: ["Cinema", "Wrap", "Reveal", "BMW"],
@@ -69,6 +75,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/bmw-f82-cinematic.jpg", alt: "BMW F82 M4 cinematic rollers" },
     videoUrl: "/videos/bmw-f82-cinematic.mp4",
+    orientation: "vertical",
     description:
       "F82 rollers cut over a sundown highway. Locked tracking, twin-turbo I6 left raw on the audio bed. No music license needed.",
     tags: ["Cinema", "Rollers", "BMW M4"],
@@ -82,6 +89,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/q50-night-cinematic.jpg", alt: "Infiniti Q50 at night" },
     videoUrl: "/videos/q50-night-cinematic.mp4",
+    orientation: "vertical",
     description:
       "Single-night Q50 piece. Wet pavement reflections, headlight spill, custom intake hiss. Shot from a chase car with practical lighting only.",
     tags: ["Cinema", "Night", "Q50"],
@@ -95,6 +103,7 @@ const PROJECTS: Project[] = [
     category: "Cinema",
     cover: { url: "/posters/american-muscle-duo.jpg", alt: "American muscle car duo" },
     videoUrl: "/videos/american-muscle-duo.mp4",
+    orientation: "vertical",
     description:
       "Two-car duo cut. Mustang and Camaro on the same canyon road. Synced lead-and-chase, gimbal pans, V8 only on the audio.",
     tags: ["Cinema", "Muscle", "Duo"],
@@ -112,6 +121,7 @@ const PROJECTS: Project[] = [
     category: "Rollers",
     cover: { url: "/posters/amg-glc-rollers.jpg", alt: "AMG GLC 63s rollers" },
     videoUrl: "/videos/amg-glc-rollers.mp4",
+    orientation: "vertical",
     description:
       "Featured roller piece. Tracking shots through a tree-tunnel road, ride-along door cam, 4.0L V8 on full song.",
     tags: ["Rollers", "AMG", "Featured"],
@@ -125,6 +135,7 @@ const PROJECTS: Project[] = [
     category: "Rollers",
     cover: { url: "/posters/gt500-rollers.jpg", alt: "Shelby GT500 rollers" },
     videoUrl: "/videos/gt500-rollers.mp4",
+    orientation: "vertical",
     description: "Supercharged 5.2L on a daylight roller run. Long lens compression, slow-mo pulls.",
     tags: ["Rollers", "Shelby", "GT500"],
     featured: true,
@@ -137,6 +148,7 @@ const PROJECTS: Project[] = [
     category: "Rollers",
     cover: { url: "/posters/zl1-rollers.jpg", alt: "Camaro ZL1 rollers" },
     videoUrl: "/videos/zl1-rollers.mp4",
+    orientation: "vertical",
     description: "ZL1 mid-day rollers piece. Simple, direct, all about the car.",
     tags: ["Rollers", "Camaro", "ZL1"],
     featured: true,
@@ -149,6 +161,7 @@ const PROJECTS: Project[] = [
     category: "Rollers",
     cover: { url: "/posters/widebody-brz-speedramp.jpg", alt: "Widebody BRZ speedramp" },
     videoUrl: "/videos/widebody-brz-speedramp.mp4",
+    orientation: "vertical",
     description: "Speedramp cut on a fender-flared BRZ. Tight angles, ramped time, sharp grade.",
     tags: ["Rollers", "Speedramp", "BRZ"],
     featured: true,
@@ -188,6 +201,7 @@ const PROJECTS: Project[] = [
     category: "Events",
     cover: { url: "/posters/cars-and-coffee-fresno.jpg", alt: "Cars and Coffee Fresno" },
     videoUrl: "/videos/cars-and-coffee-fresno.mp4",
+    orientation: "horizontal",
     description: "Recap from Cars and Coffee Fresno. Mostly handheld, mostly available light, all 35mm.",
     tags: ["Events", "Recap"],
     featured: true,
@@ -200,6 +214,7 @@ const PROJECTS: Project[] = [
     category: "Events",
     cover: { url: "/posters/rolling-fender.jpg", alt: "Rolling Fender meet" },
     videoUrl: "/videos/rolling-fender.mp4",
+    orientation: "vertical",
     description: "Joint meet recap. Two shops, one parking lot, every kind of engine.",
     tags: ["Events", "Meet"],
     featured: true,

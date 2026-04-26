@@ -2,40 +2,55 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { Project } from "@/lib/projects";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const issueNum = String(index + 1).padStart(2, "0");
+  const wrapRef = useRef<HTMLAnchorElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isHorizontal = project.orientation === "horizontal";
 
-  function handleEnter() {
+  // Autoplay when the tile becomes visible. Pause when it scrolls away.
+  useEffect(() => {
+    const wrap = wrapRef.current;
     const v = videoRef.current;
-    if (v && v.paused) v.play().catch(() => {});
-  }
-  function handleLeave() {
-    const v = videoRef.current;
-    if (!v) return;
-    v.pause();
-    v.currentTime = 0;
-  }
+    if (!wrap || !v) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: [0, 0.35, 0.6, 1] },
+    );
+
+    obs.observe(wrap);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <Link
+      ref={wrapRef}
       href={`/work/${project.slug}`}
-      className="tile-card group relative block aspect-[4/5]"
+      className={`tile-card group relative block ${
+        isHorizontal ? "col-span-1 md:col-span-2" : "col-span-1"
+      }`}
+      style={{ aspectRatio: isHorizontal ? "16 / 9" : "9 / 16" }}
       aria-label={`Open project: ${project.title}`}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      onFocus={handleEnter}
-      onBlur={handleLeave}
     >
+      {/* Poster - shown briefly until video plays */}
       <Image
         src={project.cover.url}
         alt={project.cover.alt}
         fill
-        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-        className="tile-poster object-cover"
+        sizes={isHorizontal ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
+        className="absolute inset-0 object-cover"
       />
       {project.videoUrl && (
         <video
@@ -43,44 +58,45 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           muted
           loop
           playsInline
-          preload="none"
+          preload="metadata"
+          poster={project.cover.url}
           aria-hidden
-          className="tile-video absolute inset-0 h-full w-full object-cover opacity-0"
+          className="absolute inset-0 h-full w-full object-cover"
         >
           <source src={project.videoUrl} type="video/mp4" />
         </video>
       )}
 
-      {/* gradient overlay for text legibility */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/85 via-[var(--color-ink)]/15 to-[var(--color-ink)]/40" />
+      {/* Gradient overlay for text legibility (top + bottom) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/85 via-transparent to-[var(--color-ink)]/45" />
 
-      {/* top row: stamp + project number, arrow */}
-      <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
+      {/* Top row: featured stamp + project number, arrow */}
+      <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
         <div className="flex items-center gap-2">
           {project.featured && (
             <span className="bg-[var(--color-stamp-red)] px-2 py-1 font-[var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--color-paper)]">
               Featured
             </span>
           )}
-          <span className="cut-headline-roman text-[28px] text-[var(--color-paper)] [text-shadow:_0_2px_8px_rgba(0,0,0,0.6)]">
+          <span className="cut-headline-roman text-[24px] md:text-[28px] text-[var(--color-paper)] [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">
             {issueNum}
           </span>
         </div>
         <span
           aria-hidden
-          className="cut-headline-roman text-[24px] text-[var(--color-paper)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+          className="cut-headline-roman text-[22px] md:text-[24px] text-[var(--color-paper)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]"
         >
           ↗
         </span>
       </div>
 
-      {/* bottom block: eyebrow + title */}
-      <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-        <p className="eyebrow-bright mb-2">
+      {/* Bottom block: eyebrow + title */}
+      <div className="absolute inset-x-0 bottom-0 p-4 md:p-6">
+        <p className="eyebrow-bright mb-1.5">
           {project.category} · {project.year}
           {project.client ? ` · ${project.client}` : ""}
         </p>
-        <h3 className="cut-headline-roman text-[26px] md:text-[30px] tracking-[-0.03em] leading-[1] text-[var(--color-paper)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.6)]">
+        <h3 className="cut-headline-roman text-[22px] md:text-[28px] tracking-[-0.03em] leading-[1.05] text-[var(--color-paper)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.7)]">
           {project.title}
         </h3>
       </div>
@@ -105,11 +121,14 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
           </div>
           <p className="md:col-span-4 md:col-start-9 max-w-[40ch] text-[16px] leading-[1.6] text-[var(--color-paper-mute)]">
             <span className="editorial">Twelve cuts.</span>{" "}
-            Each one shot, framed, and graded by hand. Hover any tile to play the reel.
+            Each one shot, framed, and graded by hand. Each tile plays as you scroll past — tap any to open the full reel with sound.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        <div
+          className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6"
+          style={{ gridAutoFlow: "row dense" }}
+        >
           {projects.map((p, i) => (
             <ProjectCard key={p._id} project={p} index={i} />
           ))}

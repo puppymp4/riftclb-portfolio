@@ -24,13 +24,14 @@ export function Hero() {
           loop
           playsInline
           poster="/posters/hero.jpg"
-          className="h-full w-full object-cover opacity-65"
+          className="h-full w-full object-cover"
           aria-hidden
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-ink)]/60 via-[var(--color-ink)]/30 to-[var(--color-ink)]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/60 via-transparent to-[var(--color-ink)]/40" />
+        {/* Light vignette for legibility, but keeping the footage bright */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-ink)]/15 via-transparent to-[var(--color-ink)]/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/30 via-transparent to-[var(--color-ink)]/15" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1440px] px-6 pt-16 pb-32 md:px-12 md:pt-24 md:pb-48">
