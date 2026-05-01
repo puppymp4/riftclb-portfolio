@@ -46,6 +46,10 @@ export default async function ProjectPage({
 
   return (
     <>
+      {/* Kick off the video fetch in parallel with the HTML so the player has bytes ready on mount */}
+      {project.videoUrl && (
+        <link rel="preload" as="video" href={project.videoUrl} type="video/mp4" />
+      )}
       <Nav />
       <main id="main" className="bg-[var(--color-ink)]">
         {/* HERO */}
@@ -111,9 +115,12 @@ export default async function ProjectPage({
                   }}
                 >
                   <video
+                    autoPlay
+                    muted
+                    loop
                     controls
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     poster={project.cover.url}
                     className="absolute inset-0 h-full w-full object-cover"
                   >

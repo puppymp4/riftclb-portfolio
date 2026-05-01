@@ -11,13 +11,27 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isHorizontal = project.orientation === "horizontal";
 
-  // Autoplay when the tile becomes visible. Pause when it scrolls away.
+  // Two passes: first observer warms the cache when the tile is ~600px from
+  // the viewport, second observer plays/pauses based on actual visibility.
   useEffect(() => {
     const wrap = wrapRef.current;
     const v = videoRef.current;
     if (!wrap || !v) return;
 
-    const obs = new IntersectionObserver(
+    const warm = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            v.preload = "auto";
+            v.load();
+            warm.disconnect();
+          }
+        });
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    const playObs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
@@ -30,8 +44,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       { threshold: [0, 0.35, 0.6, 1] },
     );
 
-    obs.observe(wrap);
-    return () => obs.disconnect();
+    warm.observe(wrap);
+    playObs.observe(wrap);
+    return () => {
+      warm.disconnect();
+      playObs.disconnect();
+    };
   }, []);
 
   return (
