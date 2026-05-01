@@ -29,7 +29,7 @@ export function Archive({ projects }: { projects: Project[] }) {
           <div className="md:col-span-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="cut-headline-roman text-[28px] text-[var(--color-stamp-red)]">§</span>
-              <span className="eyebrow">The Index · 47 Cuts on File</span>
+              <span className="eyebrow">The Index · 39 Cuts on File</span>
             </div>
             <h2 className="cut-headline text-[clamp(48px,8vw,128px)] text-[var(--color-paper)]">
               The <span className="cutout-outline not-italic">Archive</span>

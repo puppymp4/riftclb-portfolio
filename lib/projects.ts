@@ -109,8 +109,6 @@ const PROJECTS: Project[] = [
     tags: ["Cinema", "Muscle", "Duo"],
     featured: true,
   },
-  { _id: "p-07", slug: "lambo-sto-vol-02", title: "Lambo STO · Vol 02", year: 2024, category: "Cinema", cover: { url: "/posters/lambo-sto-christmas.jpg", alt: "Lambo STO" }, description: "Second pass on the STO. New angles, no music — just exhaust and editing.", tags: ["Cinema", "Lamborghini"] },
-  { _id: "p-08", slug: "supra-christmas", title: "Supra · Christmas", year: 2024, category: "Cinema", cover: { url: "/posters/lambo-sto-christmas.jpg", alt: "Supra Christmas" }, description: "Holiday Supra short. Snow flurries, garage warm-ups, twin-turbo whistle.", tags: ["Cinema", "Supra"] },
 
   // ===== ROLLERS & SPEEDRAMPS =====
   {
@@ -183,14 +181,6 @@ const PROJECTS: Project[] = [
   { _id: "p-25", slug: "poppin-them-thangz", title: "Poppin Them Thangz", year: 2026, category: "Reels", cover: { url: "/posters/zl1-rollers.jpg", alt: "Poppin them thangz" }, description: "Reel.", tags: ["Reels"] },
   { _id: "p-26", slug: "porsche-fresno", title: "Porsche · Fresno", year: 2024, category: "Reels", cover: { url: "/posters/cars-and-coffee-fresno.jpg", alt: "Porsche Fresno" }, description: "Porsche reel.", tags: ["Reels", "Porsche"] },
   { _id: "p-27", slug: "mitsubishi-fresno", title: "Mitsubishi · Fresno", year: 2025, category: "Reels", cover: { url: "/posters/cars-and-coffee-fresno.jpg", alt: "Mitsubishi Fresno" }, description: "Mitsubishi reel.", tags: ["Reels"] },
-
-  // ===== TRUCKS =====
-  { _id: "p-28", slug: "truck-shop", title: "Truck · Shop", year: 2026, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "Truck shop" }, description: "Truck shop cut.", tags: ["Trucks"] },
-  { _id: "p-29", slug: "truck-white", title: "Truck · White", year: 2024, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "White truck" }, description: "Truck cut.", tags: ["Trucks"] },
-  { _id: "p-30", slug: "truck-vol-02", title: "Truck · Vol 02", year: 2024, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "Truck vol 02" }, description: "Truck volume two.", tags: ["Trucks"] },
-  { _id: "p-31", slug: "truck-vol-03", title: "Truck · Vol 03", year: 2024, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "Truck vol 03" }, description: "Truck volume three.", tags: ["Trucks"] },
-  { _id: "p-32", slug: "haiden-edward-5th-gen", title: "Haiden Edward · 5th Gen", year: 2024, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "5th gen truck" }, description: "Personal truck build.", tags: ["Trucks"] },
-  { _id: "p-33", slug: "hotshot-booth-truck", title: "HotShot · Booth Truck", year: 2024, category: "Trucks", cover: { url: "/posters/gt500-rollers.jpg", alt: "HotShot truck" }, description: "Brand truck cut.", tags: ["Trucks", "Brand"] },
 
   // ===== EVENTS =====
   {

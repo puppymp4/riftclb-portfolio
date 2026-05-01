@@ -57,7 +57,7 @@ export function About() {
 
             <div className="mt-10 grid grid-cols-3 gap-4 border-t border-[var(--color-ink-line)] pt-8">
               <div>
-                <div className="cut-headline-roman text-[36px] md:text-[44px] text-[var(--color-paper)]">47</div>
+                <div className="cut-headline-roman text-[36px] md:text-[44px] text-[var(--color-paper)]">39</div>
                 <div className="eyebrow mt-1">Cuts on File</div>
               </div>
               <div>
