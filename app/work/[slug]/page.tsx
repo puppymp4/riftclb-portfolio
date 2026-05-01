@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { getProject, getProjects } from "@/lib/projects";
 import type { Metadata } from "next";
 
@@ -50,6 +51,7 @@ export default async function ProjectPage({
       {project.videoUrl && (
         <link rel="preload" as="video" href={project.videoUrl} type="video/mp4" />
       )}
+      <ScrollToTop />
       <Nav />
       <main id="main" className="bg-[var(--color-ink)]">
         {/* HERO */}

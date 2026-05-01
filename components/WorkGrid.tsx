@@ -57,67 +57,92 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       ref={wrapRef}
       href={`/work/${project.slug}`}
       className={`tile-card group relative block ${
-        isHorizontal ? "col-span-1 md:col-span-2" : "col-span-1"
+        isHorizontal ? "col-span-2 md:col-span-2" : "col-span-1"
       }`}
-      style={{ aspectRatio: isHorizontal ? "16 / 9" : "9 / 16" }}
       aria-label={`Open project: ${project.title}`}
     >
-      {/* Poster - shown briefly until video plays */}
-      <Image
-        src={project.cover.url}
-        alt={project.cover.alt}
-        fill
-        sizes={isHorizontal ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
-        className="absolute inset-0 object-cover"
-      />
-      {project.videoUrl && (
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={project.cover.url}
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src={project.videoUrl} type="video/mp4" />
-        </video>
-      )}
+      {/* Media surface */}
+      <div
+        className="relative overflow-hidden"
+        style={{ aspectRatio: isHorizontal ? "16 / 9" : "9 / 16" }}
+      >
+        <Image
+          src={project.cover.url}
+          alt={project.cover.alt}
+          fill
+          sizes={isHorizontal ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
+          className="absolute inset-0 object-cover"
+        />
+        {project.videoUrl && (
+          <video
+            ref={videoRef}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={project.cover.url}
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            <source src={project.videoUrl} type="video/mp4" />
+          </video>
+        )}
 
-      {/* Gradient overlay for text legibility (top + bottom) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/85 via-transparent to-[var(--color-ink)]/45" />
+        {/* Gradient overlay only where text overlays (vertical tiles always, horizontal on md+) */}
+        <div
+          className={`pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/85 via-transparent to-[var(--color-ink)]/45 ${
+            isHorizontal ? "hidden md:block" : ""
+          }`}
+        />
 
-      {/* Top row: featured stamp + project number, arrow */}
-      <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
-        <div className="flex items-center gap-2">
-          {project.featured && (
-            <span className="bg-[var(--color-stamp-red)] px-2 py-1 font-[var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--color-paper)]">
-              Featured
+        {/* Top row: featured stamp + project number, arrow — overlay on every layout */}
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
+          <div className="flex items-center gap-2">
+            {project.featured && (
+              <span className="bg-[var(--color-stamp-red)] px-2 py-1 font-[var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--color-paper)]">
+                Featured
+              </span>
+            )}
+            <span className="cut-headline-roman text-[24px] md:text-[28px] text-[var(--color-paper)] [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">
+              {issueNum}
             </span>
-          )}
-          <span className="cut-headline-roman text-[24px] md:text-[28px] text-[var(--color-paper)] [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">
-            {issueNum}
+          </div>
+          <span
+            aria-hidden
+            className="cut-headline-roman text-[22px] md:text-[24px] text-[var(--color-paper)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]"
+          >
+            ↗
           </span>
         </div>
-        <span
-          aria-hidden
-          className="cut-headline-roman text-[22px] md:text-[24px] text-[var(--color-paper)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]"
+
+        {/* Title block — overlays on vertical tiles, and on horizontal tiles only at md+ */}
+        <div
+          className={`absolute inset-x-0 bottom-0 p-4 md:p-6 ${
+            isHorizontal ? "hidden md:block" : ""
+          }`}
         >
-          ↗
-        </span>
+          <p className="eyebrow-bright mb-1.5">
+            {project.category} · {project.year}
+            {project.client ? ` · ${project.client}` : ""}
+          </p>
+          <h3 className="cut-headline-roman text-[22px] md:text-[28px] tracking-[-0.03em] leading-[1.05] text-[var(--color-paper)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.7)]">
+            {project.title}
+          </h3>
+        </div>
       </div>
 
-      {/* Bottom block: eyebrow + title */}
-      <div className="absolute inset-x-0 bottom-0 p-4 md:p-6">
-        <p className="eyebrow-bright mb-1.5">
-          {project.category} · {project.year}
-          {project.client ? ` · ${project.client}` : ""}
-        </p>
-        <h3 className="cut-headline-roman text-[22px] md:text-[28px] tracking-[-0.03em] leading-[1.05] text-[var(--color-paper)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.7)]">
-          {project.title}
-        </h3>
-      </div>
+      {/* Mobile-only caption block under horizontal tiles (no overlay, easier to read) */}
+      {isHorizontal && (
+        <div className="px-1 pt-3 pb-1 md:hidden">
+          <p className="eyebrow-bright mb-1.5">
+            {project.category} · {project.year}
+            {project.client ? ` · ${project.client}` : ""}
+          </p>
+          <h3 className="cut-headline-roman text-[20px] tracking-[-0.03em] leading-[1.05] text-[var(--color-paper)]">
+            {project.title}
+          </h3>
+        </div>
+      )}
     </Link>
   );
 }
