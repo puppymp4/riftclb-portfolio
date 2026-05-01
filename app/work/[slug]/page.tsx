@@ -54,67 +54,32 @@ export default async function ProjectPage({
       <ScrollToTop />
       <Nav />
       <main id="main" className="bg-[var(--color-ink)]">
-        {/* HERO */}
-        <section className="relative overflow-hidden">
-          <div className="mx-auto max-w-[1440px] px-6 pt-12 pb-12 md:px-12 md:pt-20 md:pb-16">
+        {/* HERO MEDIA · video front-and-center, title and copy live below */}
+        <section className="relative">
+          <div className="mx-auto max-w-[1440px] px-6 pt-6 md:px-12 md:pt-10">
             <Link
               href="/#work"
-              className="eyebrow inline-flex items-center gap-2 mb-12 hover:text-[var(--color-paper)] transition-colors"
+              className="eyebrow inline-flex items-center gap-2 mb-6 hover:text-[var(--color-paper)] transition-colors"
             >
               ← Back to the index
             </Link>
 
-            <div className="mb-8 flex flex-wrap items-end gap-3 md:mb-10">
-              <span className="eyebrow">{project.category}</span>
-              <span className="h-px w-8 bg-[var(--color-paper)]/30" />
-              <span className="eyebrow">{project.year}</span>
-              {project.client && (
-                <>
-                  <span className="h-px w-8 bg-[var(--color-paper)]/30" />
-                  <span className="eyebrow">Client / {project.client}</span>
-                </>
-              )}
-            </div>
-
-            <h1 className="cut-headline text-[clamp(56px,11vw,176px)] mb-12 text-[var(--color-paper)]">
-              {project.title}
-            </h1>
-
-            <div className="grid gap-8 md:grid-cols-12 md:gap-12">
-              <p className="md:col-span-7 text-[18px] leading-[1.65] md:text-[20px] md:leading-[1.7] text-[var(--color-paper)]">
-                {project.description}
-              </p>
-              {project.tags?.length ? (
-                <div className="md:col-span-4 md:col-start-9">
-                  <div className="eyebrow mb-3">Tags</div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.18em] border border-[var(--color-paper-fade)] text-[var(--color-paper)] px-3 py-1.5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </section>
-
-        {/* HERO MEDIA · video player or cover image */}
-        <section className="relative">
-          <div className="mx-auto max-w-[1440px] px-6 md:px-12">
             {project.videoUrl ? (
               <div className="mx-auto flex justify-center">
                 <div
-                  className={`relative w-full overflow-hidden border border-[var(--color-ink-line)] bg-[var(--color-ink-elevated)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ${
-                    project.orientation === "vertical" ? "max-w-[460px]" : "max-w-[1280px]"
-                  }`}
-                  style={{
-                    aspectRatio: project.orientation === "vertical" ? "9 / 16" : "16 / 9",
-                  }}
+                  className="relative w-full overflow-hidden border border-[var(--color-ink-line)] bg-[var(--color-ink-elevated)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]"
+                  style={
+                    project.orientation === "vertical"
+                      ? {
+                          aspectRatio: "9 / 16",
+                          maxHeight: "calc(100vh - 160px)",
+                          maxWidth: "calc((100vh - 160px) * 9 / 16)",
+                        }
+                      : {
+                          aspectRatio: "16 / 9",
+                          maxWidth: "1280px",
+                        }
+                  }
                 >
                   <video
                     autoPlay
@@ -142,6 +107,48 @@ export default async function ProjectPage({
                 />
               </div>
             )}
+          </div>
+        </section>
+
+        {/* TITLE + COPY · below the video */}
+        <section className="relative overflow-hidden">
+          <div className="mx-auto max-w-[1440px] px-6 pt-12 pb-12 md:px-12 md:pt-16 md:pb-16">
+            <div className="mb-6 flex flex-wrap items-end gap-3 md:mb-8">
+              <span className="eyebrow">{project.category}</span>
+              <span className="h-px w-8 bg-[var(--color-paper)]/30" />
+              <span className="eyebrow">{project.year}</span>
+              {project.client && (
+                <>
+                  <span className="h-px w-8 bg-[var(--color-paper)]/30" />
+                  <span className="eyebrow">Client / {project.client}</span>
+                </>
+              )}
+            </div>
+
+            <h1 className="cut-headline text-[clamp(40px,7vw,112px)] mb-8 text-[var(--color-paper)]">
+              {project.title}
+            </h1>
+
+            <div className="grid gap-8 md:grid-cols-12 md:gap-12">
+              <p className="md:col-span-7 text-[17px] leading-[1.65] md:text-[19px] md:leading-[1.7] text-[var(--color-paper)]">
+                {project.description}
+              </p>
+              {project.tags?.length ? (
+                <div className="md:col-span-4 md:col-start-9">
+                  <div className="eyebrow mb-3">Tags</div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="font-[var(--font-mono)] text-[11px] uppercase tracking-[0.18em] border border-[var(--color-paper-fade)] text-[var(--color-paper)] px-3 py-1.5"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
         </section>
 
