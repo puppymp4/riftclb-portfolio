@@ -216,6 +216,10 @@ export function BookingForm() {
           {status === "submitting" ? "Sending…" : "Send Inquiry →"}
         </button>
       </div>
+
+      <p className="text-[11px] text-[var(--color-paper-fade)] text-center pt-1">
+        Your info goes straight to my inbox. Never shared, never sold.
+      </p>
     </form>
   );
 }
